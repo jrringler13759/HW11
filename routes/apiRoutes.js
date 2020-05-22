@@ -1,17 +1,19 @@
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 
-const notes = [];
+const readFile = (res) => {
+  fs.readFile("db/db.json", "utf8", function(err, data){
+    if(err)throw err;
+    return res.json(JSON.parse(data));
+  })
+}
 
 module.exports = function(app) {
   
   // API GET Requests
   app.get("/api/notes", function(req, res) {
 
-    fs.readFile("db/db.json", "utf8", function(err, data){
-      if(err)throw err;
-      res.json(JSON.parse(data));
-    })
+    readFile(res);
   });
 
 
